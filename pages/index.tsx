@@ -1,22 +1,70 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import Navbar from '../components/common/navbar'
+import Navbar from '../components/navbar'
+import Footer from '../components/footer'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>CollegeCo</title>
-        <meta name="description" content="Sell on Colleges" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       
-      <Navbar/>
-{/* 
-      <main className={styles.main}>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Helllo<br/>
+      Hi<br></br>
+
+     
+      {/* <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
@@ -55,9 +103,8 @@ const Home: NextPage = () => {
             </p>
           </a>
         </div>
-      </main>
- */}
-      <footer className={styles.footer}>
+      </main> */}
+      {/* <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
@@ -68,7 +115,7 @@ const Home: NextPage = () => {
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
-      </footer>
+      </footer> */}
     </div>
   )
 }
