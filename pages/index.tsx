@@ -4,67 +4,86 @@ import Image from 'next/image'
 import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 import styles from '../styles/Home.module.css'
+import ItemCard from '../components/itemcard'
+import GridView from '../components/gridview'
+import { useEffect, useState } from 'react'
+import TruncatedCard from '../shapes/truncated-data'
 
-const Home: NextPage = () => {
-  return (
-    <div className={styles.container}>
-      
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Helllo<br/>
-      Hi<br></br>
+export const getStaticProps = async () => {
+    const res = await fetch('http://localhost:8000/home')
+    const data = await res.json();
 
-     
-      {/* <main className={styles.main}>
+    return {
+        props: { main: data.main_page_data }
+    }
+}
+
+const Home: NextPage = ({ main }: any) => {
+
+    return (
+        <div className={styles.container}>
+            <GridView>
+                {(main).map((cardData: any) => {
+                    return <ItemCard key={cardData.item_id} cardData={cardData}/>
+                })}
+            </GridView>
+
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Helllo<br />
+            Hi<br></br>
+
+
+            {/* <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
@@ -104,7 +123,7 @@ const Home: NextPage = () => {
           </a>
         </div>
       </main> */}
-      {/* <footer className={styles.footer}>
+            {/* <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
@@ -116,8 +135,8 @@ const Home: NextPage = () => {
           </span>
         </a>
       </footer> */}
-    </div>
-  )
+        </div>
+    )
 }
 
 export default Home
