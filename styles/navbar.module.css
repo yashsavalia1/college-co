@@ -28,8 +28,13 @@
     background-color: rgb(255, 255, 0);
 }
 
-.nav a:last-child {
+.nav a:nth-child(9) {
     margin-right: 10px;
+    margin-left: auto;
+}
+
+.nav a:nth-child(8) {
+    /*margin-right: 10px;*/
     margin-left: auto;
 }
 
