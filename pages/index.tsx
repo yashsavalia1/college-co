@@ -8,135 +8,61 @@ import ItemCard from '../components/itemcard'
 import GridView from '../components/gridview'
 import { useEffect, useState } from 'react'
 import TruncatedCard from '../shapes/truncated-data'
+import { Category, FullAddress, PrismaClient } from '@prisma/client'
+import { DisplayListing } from '../types/DisplayListing'
 
-export const getStaticProps = async () => {
-    const res = await fetch('http://localhost:8000/home')
-    const data = await res.json();
+export const getServerSideProps = async () => {
 
-    return {
-        props: { main: data.main_page_data }
-    }
+  const prisma = new PrismaClient();
+  const listings = await prisma.listing.findMany({ where: { published: true } });
+
+  const displayListings: DisplayListing[] = [];
+  const addresses = await prisma.fullAddress.findMany();
+
+  for (const listing of listings) {
+    displayListings.push(
+      {
+        id: listing.id,
+        title: listing.title,
+        price: listing.price.toNumber(),
+        description: listing.description,
+        categories: listing.categories,
+        address: addresses.find(address => address.id == listing.addressId) || null,
+        pictureLink: "https://thumbor.offerup.com/-Wbg8OfMLeq9cbhL9gO46_49wJg=/750x1000/b539/b53931ddd0064b29b930c8d35f1b17e7.jpg"
+      }
+    )
+
+  }
+  //console.log("Listings:", displayListings);
+
+  return {
+    props: { listings: displayListings }
+  }
 }
 
-const Home: NextPage = ({ main }: any) => {
+// export const getStaticProps = async () => {
+//   const res = await fetch('http://localhost:3000/api/home')
+//   console.log(res);
 
-    return (
-        <div className={styles.container}>
-            <GridView>
-                {(main).map((cardData: any) => {
-                    return <ItemCard key={cardData.item_id} cardData={cardData}/>
-                })}
-            </GridView>
-
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Helllo<br />
-            Hi<br></br>
+//   const data = await res.json();
+//   console.log(data.main_page_data[0]);
 
 
-            {/* <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+//   return {
+//     props: { main: data.main_page_data }
+//   }
+// }
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+const Home: NextPage<{ listings: DisplayListing[] }> = ({ listings }: { listings: DisplayListing[] }) => {
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main> */}
-            {/* <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer> */}
-        </div>
-    )
+  return (
+    <div className={styles.container}>
+      <GridView>
+        {listings.map(listing => <ItemCard key={listing.id} cardData={listing} />
+        )}
+      </GridView>
+    </div>
+  )
 }
 
 export default Home

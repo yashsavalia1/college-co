@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String       @id @default(cuid())
+  name          String
+  userName      String       @unique @map(name: "user_name")
+  email         String       @unique
+  address       FullAddress? @relation(fields: [fullAddressId], references: [id])
+  fullAddressId String?      @map("full_address_id")
+  createdAt     DateTime     @default(now()) @map(name: "created_at")
+  updatedAt     DateTime     @updatedAt @map(name: "updated_at")
+  listings      Listing[]
+
+  @@map(name: "users")
+}
+
+model Listing {
+  id          String      @id @default(cuid())
+  title       String
+  price       Decimal     @default(0.00) @db.Decimal(8, 2)
+  description String?
+  categories  Category[]
+  views       Int         @default(0) @ignore
+  address     FullAddress @relation(fields: [addressId], references: [id])
+  addressId   String      @map("address_id")
+  published   Boolean     @default(false)
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String      @map("author_id")
+  createdAt   DateTime    @default(now()) @map(name: "created_at")
+
+  @@map(name: "listings")
+}
+
+model FullAddress {
+  id              String    @id @default(cuid())
+  address         String
+  city            String
+  stateOrProvince String    @map("state_province")
+  zipOrPostalCode String    @map(name: "zip_postal_code")
+  country         String
+  Listing         Listing[]
+  User            User[]
+
+  @@map(name: "full_addresses")
+}
+
+enum Category {
+  HARDWARE
+  TEXTBOOKS
+
+  @@map("categories")
+}
