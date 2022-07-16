@@ -1,4 +1,4 @@
-import TruncatedCard from "../../shapes/truncated-data"
+import TruncatedCard from "../../types/truncated-data"
 import { DisplayListing } from "../../types/DisplayListing"
 import style from "./itemcard.module.css"
 
@@ -11,7 +11,7 @@ export default function ItemCard({ cardData }: { cardData: DisplayListing }) {
         <div className={style.card} id={cardData.id}>
             <img src={cardData.pictureLink} />
             <div>{cardData.title}</div>
-            <div>{cardData.price}</div>
+            <div>${cardData.price}</div>
             {cardData.address &&
                 <div>{addressAsStr}</div>
             }

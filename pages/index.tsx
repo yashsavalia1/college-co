@@ -7,7 +7,7 @@ import styles from '../styles/Home.module.css'
 import ItemCard from '../components/itemcard'
 import GridView from '../components/gridview'
 import { useEffect, useState } from 'react'
-import TruncatedCard from '../shapes/truncated-data'
+import TruncatedCard from '../types/truncated-data'
 import { Category, FullAddress, PrismaClient } from '@prisma/client'
 import { DisplayListing } from '../types/DisplayListing'
 
@@ -39,19 +39,6 @@ export const getServerSideProps = async () => {
     props: { listings: displayListings }
   }
 }
-
-// export const getStaticProps = async () => {
-//   const res = await fetch('http://localhost:3000/api/home')
-//   console.log(res);
-
-//   const data = await res.json();
-//   console.log(data.main_page_data[0]);
-
-
-//   return {
-//     props: { main: data.main_page_data }
-//   }
-// }
 
 const Home: NextPage<{ listings: DisplayListing[] }> = ({ listings }: { listings: DisplayListing[] }) => {
 
