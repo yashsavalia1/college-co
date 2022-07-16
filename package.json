@@ -11,7 +11,7 @@
   "dependencies": {
     "@prisma/client": "^4.0.0",
     "bootstrap": "^5.1.3",
-    "next": "11.1.2",
+    "next": "^12.2.2",
     "onsenui": "^2.11.2",
     "react": "17.0.2",
     "react-bootstrap": "^2.4.0",
