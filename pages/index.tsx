@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import TruncatedCard from '../types/truncated-data'
 import { Category, FullAddress, PrismaClient } from '@prisma/client'
 import { DisplayListing } from '../types/DisplayListing'
+import SearchBar from '../components/searchbar'
 
 export const getServerSideProps = async () => {
 
@@ -44,10 +45,16 @@ const Home: NextPage<{ listings: DisplayListing[] }> = ({ listings }: { listings
 
   return (
     <div className={styles.container}>
-      <GridView>
+      {/* <GridView>
         {listings.map(listing => <ItemCard key={listing.id} cardData={listing} />
         )}
-      </GridView>
+      </GridView> */}
+      <div className='w-100'>
+        <SearchBar></SearchBar>
+      </div>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
     </div>
   )
 }
