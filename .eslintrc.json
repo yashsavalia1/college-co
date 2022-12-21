@@ -1,3 +1,23 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "jsx-quotes": [
+      "warn",
+      "prefer-double"
+    ],
+    "no-tabs": 1,
+    "indent": [
+      "warn",
+      2
+    ],
+    "no-multiple-empty-lines": [
+      "warn",
+      {
+        "max": 1,
+        "maxEOF": 1
+      }
+    ]
+  }
 }
