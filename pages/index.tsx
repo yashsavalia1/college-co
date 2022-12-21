@@ -7,15 +7,26 @@ import HomeLayout from '@components/HomeLayout'
 import HomeCard from '@components/HomeCard'
 import PocketBase from 'pocketbase';
 import studentsBg from '../assets/students-background.jpg'
+import Listing from '../types/listing'
 
 const inter = Inter({ subsets: ['latin'] })
 const prompt = Prompt({ weight: "700", subsets: ['latin'] })
 
 export async function getStaticProps() {
 
-  const pb = new PocketBase('http://127.0.0.1:8090');
+  // const pb = new PocketBase('http://127.0.0.1:8090');
 
-  const records = JSON.parse(JSON.stringify(await pb.collection('listings').getFullList()))
+  // const records = JSON.parse(JSON.stringify(await pb.collection('listings').getFullList()))
+  const records : Listing[] = [{
+    id: '1',
+    title: 'Test',
+    description: 'Test',
+    price: 100,
+    tags: ['test'],
+    created: new Date().toISOString(),
+    published: true,
+    images: ['https://placeimg.com/400/225/arch'],
+  }]
   return {
     props: {
       records,
@@ -24,8 +35,6 @@ export async function getStaticProps() {
 }
 
 export default function Home({ records }: { records: any }) {
-
-  console.log('records:', records);
 
   // const pb = new PocketBase('http://127.0.0.1:8090');
 

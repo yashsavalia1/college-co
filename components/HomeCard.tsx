@@ -14,7 +14,7 @@ const HomeCard: React.FC<{ className?: string, listing?: Listing }> = ({ classNa
         </h2>
         <p>{listing?.description}</p>
         <div className="card-actions justify-end">
-          {listing?.tags.map((tag, i) => <div key={i} className="badge badge-outline">{tag}</div>)}
+          {listing?.tags?.map((tag, i) => <div key={i} className="badge badge-outline">{tag}</div>)}
         </div>
         <div className="footer">Posted {new Date(listing?.created as string).toLocaleDateString()}</div>
       </div>
