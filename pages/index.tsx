@@ -44,12 +44,12 @@ export default function Home({ records }: { records: any }) {
   return (
     <>
       <Head>
-        <title className="w-6">College Co</title>
+        <title className="w-6">CollegeCo</title>
       </Head>
       <HomeLayout>
         <div className="relative">
           <Image src={studentsBg} alt="students" priority className="-z-20 object-cover w-full max-h-96 brightness-50"></Image>
-          <div className={`${prompt.className} text-5xl text-center animate-fade-in text-gray-200 absolute left-1/2 top-1/2 `}>
+          <div className={`${prompt.className} md:text-5xl text-3xl text-center animate-fade-in text-gray-200 absolute left-1/2 top-1/2 md:translate-x-0 -translate-x-1/2 md:translate-y-0 -translate-y-1/2`}>
             Welcome to the CollegeCo Marketplace
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function Home({ records }: { records: any }) {
           <h1 className="text-3xl mb-8">
             Listings
           </h1>
-          <div className="flex flex-wrap gap-8">
+          <div className="flex flex-wrap gap-8 md:justify-start justify-center">
             {records.map((record: any) => (
               <HomeCard className="w-72" key={record.id} listing={record}></HomeCard>
             ))}
