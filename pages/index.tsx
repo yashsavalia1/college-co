@@ -17,7 +17,7 @@ export async function getStaticProps() {
   // const pb = new PocketBase('http://127.0.0.1:8090');
 
   // const records = JSON.parse(JSON.stringify(await pb.collection('listings').getFullList()))
-  const records : Listing[] = [{
+  const records: Listing[] = [{
     id: '1',
     title: 'Test',
     description: 'Test',
@@ -44,13 +44,14 @@ export default function Home({ records }: { records: any }) {
   return (
     <>
       <Head>
-        <title className="w-6">CollegeCo</title>
+        <title>CollegeCo</title>
       </Head>
+
       <HomeLayout>
         <div className="relative">
-          <Image src={studentsBg} alt="students" priority className="-z-20 object-cover w-full max-h-96 brightness-50"></Image>
-          <div className={`${prompt.className} md:text-5xl text-3xl text-center animate-fade-in text-gray-200 absolute left-1/2 top-1/2 md:translate-x-0 -translate-x-1/2 md:translate-y-0 -translate-y-1/2`}>
-            Welcome to the CollegeCo Marketplace
+          <Image src={studentsBg} alt="students" priority className="-z-20 object-cover w-full max-h-96 min-h-[12rem]  brightness-50"></Image>
+          <div className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
+            <div className={`flex animate-fade-in text-gray-200 ${prompt.className} md:text-5xl text-3xl`}>Welcome to the CollegeCo Marketplace</div>
           </div>
         </div>
 

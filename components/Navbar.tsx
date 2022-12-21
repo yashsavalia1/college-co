@@ -3,6 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 import NavbarSearchBar from './NavbarSearchBar'
+import { Prompt } from '@next/font/google'
+
+const prompt = Prompt({ weight: "700", subsets: ['latin'] })
 
 export default function Navbar() {
   return (
@@ -22,7 +25,7 @@ export default function Navbar() {
           <div className="w-10 md:mr-4 mr-0 align-middle">
             <Image src={logo} alt="Logo" style={{ objectFit: 'contain' }} />
           </div>
-          <span className="text-2xl md:block hidden">CollegeCo</span>
+          <span className={`text-2xl md:block hidden ${prompt.className}`}>CollegeCo</span>
         </Link>
 
         <div className="md:block hidden">
