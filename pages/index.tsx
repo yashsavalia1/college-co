@@ -14,19 +14,10 @@ const prompt = Prompt({ weight: "700", subsets: ['latin'] })
 
 export async function getStaticProps() {
 
-  // const pb = new PocketBase('http://127.0.0.1:8090');
+  const pb = new PocketBase('https://college-co-db.fly.dev/');
 
-  // const records = JSON.parse(JSON.stringify(await pb.collection('listings').getFullList()))
-  const records: Listing[] = [{
-    id: '1',
-    title: 'Test',
-    description: 'Test',
-    price: 100,
-    tags: ['test'],
-    created: new Date().toISOString(),
-    published: true,
-    images: ['https://placeimg.com/400/225/arch'],
-  }]
+  const records = JSON.parse(JSON.stringify(await pb.collection('listings').getFullList()))
+
   return {
     props: {
       records,
