@@ -16,7 +16,6 @@ import studentsBg from '../assets/students-background.jpg';
 import styles from '../styles/Home.module.css';
 import Listing from '../types/listing';
 import initPocketBase from '../utils/pocketbase-init';
-import { ListingsRecord } from '../utils/pocketbase-types';
 
 const prompt = Prompt({ weight: '700', subsets: ['latin'] });
 
