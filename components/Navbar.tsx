@@ -1,16 +1,15 @@
-import logo from '@assets/CollegeCo.png'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Bars3Icon } from '@heroicons/react/24/solid'
-import NavbarSearchBar from './NavbarSearchBar'
-import { Prompt } from '@next/font/google'
+import logo from '@assets/CollegeCo.png';
+import { Bars3Icon } from '@heroicons/react/24/solid';
+import { Prompt } from '@next/font/google';
+import Image from 'next/image';
+import Link from 'next/link';
+import NavbarSearchBar from './NavbarSearchBar';
 
-const prompt = Prompt({ weight: "700", subsets: ['latin'] })
+const prompt = Prompt({ weight: '700', subsets: ['latin'] });
 
 export default function Navbar() {
   return (
     <nav className="navbar bg-gray-300">
-
       <div className="md:hidden">
         <label htmlFor="main-drawer" className="btn btn-square btn-ghost">
           <Bars3Icon className="w-6 h-6"></Bars3Icon>
@@ -25,7 +24,9 @@ export default function Navbar() {
           <div className="w-10 md:mr-4 mr-0 align-middle">
             <Image src={logo} alt="Logo" style={{ objectFit: 'contain' }} />
           </div>
-          <span className={`text-2xl md:block hidden ${prompt.className}`}>CollegeCo</span>
+          <span className={`text-2xl md:block hidden ${prompt.className}`}>
+            CollegeCo
+          </span>
         </Link>
 
         <div className="md:block hidden">
@@ -45,7 +46,12 @@ export default function Navbar() {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <Image src="https://placeimg.com/80/80/people" width={80} height={80} alt="" />
+              <Image
+                src="https://placeimg.com/80/80/people"
+                width={80}
+                height={80}
+                alt=""
+              />
             </div>
           </label>
           <ul
@@ -67,7 +73,6 @@ export default function Navbar() {
           </ul>
         </div>
       </div>
-
     </nav>
-  )
+  );
 }

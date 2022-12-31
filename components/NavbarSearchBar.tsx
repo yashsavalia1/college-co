@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 export default function NavbarSearchBar() {
   return (
@@ -12,5 +12,5 @@ export default function NavbarSearchBar() {
         <MagnifyingGlassIcon className="w-6 h-6"></MagnifyingGlassIcon>
       </button>
     </div>
-  )
+  );
 }

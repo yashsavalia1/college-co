@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-types": "tsc --pretty --noEmit",
+    "check-format": "prettier --check ./**/*.{js,jsx,ts,tsx} !./node_modules/** !./.next/**",
+    "check-lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "format": "prettier --write ./**/*.{js,jsx,ts,tsx} !./node_modules/** !./.next/**",
+    "test": "npm run check-types && npm run check-format && npm run check-lint && npm run build"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
@@ -15,18 +20,24 @@
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.9",
     "daisyui": "^2.46.0",
-    "eslint": "8.30.0",
-    "eslint-config-next": "13.0.7",
     "heroicons": "^2.0.13",
-    "next": "13.0.7",
-    "pocketbase": "^0.9.0",
+    "next": "^13.1.1",
+    "pocketbase": "^0.9.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "4.9.4"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.30.0",
+    "eslint-config-next": "^13.1.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.31.11",
     "postcss": "^8.4.20",
-    "tailwindcss": "^3.2.4"
+    "prettier": "^2.8.1",
+    "prettier-plugin-organize-imports": "^3.2.1",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.4"
   }
 }

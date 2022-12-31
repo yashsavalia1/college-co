@@ -1,37 +1,56 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter, Prompt, } from '@next/font/google'
-import styles from '../styles/Home.module.css'
-import Navbar from '@components/Navbar'
-import HomeLayout from '@components/HomeLayout'
-import HomeCard from '@components/HomeCard'
-import PocketBase from 'pocketbase';
-import studentsBg from '../assets/students-background.jpg'
-import Listing from '../types/listing'
+import HomeCard from '@components/HomeCard';
+import HomeLayout from '@components/HomeLayout';
+import Navbar from '@components/Navbar';
+import { Prompt } from '@next/font/google';
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextApiRequest,
+  NextApiResponse,
+} from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import PocketBase, { Record } from 'pocketbase';
+import { useEffect, useState } from 'react';
+import studentsBg from '../assets/students-background.jpg';
+import styles from '../styles/Home.module.css';
+import Listing from '../types/listing';
+import initPocketBase from '../utils/pocketbase-init';
+import { ListingsRecord } from '../utils/pocketbase-types';
 
-const inter = Inter({ subsets: ['latin'] })
-const prompt = Prompt({ weight: "700", subsets: ['latin'] })
+const prompt = Prompt({ weight: '700', subsets: ['latin'] });
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps<{
+  listings: (Listing & { imageUrl: string })[];
+}> = async ({ req, res }) => {
+  const pb = await initPocketBase(
+    req as NextApiRequest,
+    res as NextApiResponse
+  );
 
-  const pb = new PocketBase('https://college-co-db.fly.dev/');
+  const listings = (await pb.collection('listings').getList<Listing>(1, 50))
+    .items;
 
-  const records = JSON.parse(JSON.stringify(await pb.collection('listings').getFullList()))
+  const listingsWithImages = listings.map((listing) => {
+    const firstFilename = listing.images ? listing.images[0] : null;
+    let url = '';
+    if (firstFilename)
+      url = pb.getFileUrl(listing as unknown as Record, firstFilename, {
+        thumb: '100x250',
+      });
+    return { ...listing, imageUrl: url };
+  });
 
   return {
     props: {
-      records,
+      listings: listingsWithImages,
     },
-  }
-}
+  };
+};
 
-export default function Home({ records }: { records: any }) {
-
-  // const pb = new PocketBase('http://127.0.0.1:8090');
-
-  // pb.collection('listings').getFullList().then((res) => {
-  //   console.log(res)
-  // });
+export default function Home({
+  listings,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -40,31 +59,39 @@ export default function Home({ records }: { records: any }) {
 
       <HomeLayout>
         <div className="relative">
-          <Image src={studentsBg} alt="students" priority className="-z-20 object-cover w-full max-h-96 min-h-[12rem]  brightness-50"></Image>
-          <div className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
-            <div className={`flex animate-fade-in text-gray-200 ${prompt.className} md:text-5xl text-3xl`}>Welcome to the CollegeCo Marketplace</div>
+          <Image
+            src={studentsBg}
+            alt="students"
+            priority
+            className="-z-20 object-cover w-full max-h-96 
+            min-h-[12rem] brightness-50"
+          ></Image>
+          <div
+            className="text-center absolute top-1/2 left-1/2 
+          -translate-x-1/2 -translate-y-1/2 select-none"
+          >
+            <div
+              className={`flex animate-fade-in text-gray-200 ${prompt.className} md:text-5xl text-3xl`}
+            >
+              Welcome to the CollegeCo Marketplace
+            </div>
           </div>
         </div>
 
         <section className="p-3">
-          <h1 className="text-3xl mb-8">
-            Listings
-          </h1>
+          <h1 className="text-3xl mb-8">Listings</h1>
           <div className="flex flex-wrap gap-8 md:justify-start justify-center">
-            {records.map((record: any) => (
-              <HomeCard className="w-72" key={record.id} listing={record}></HomeCard>
+            {listings.map((listing) => (
+              <HomeCard
+                className="w-72"
+                key={listing.id}
+                listing={listing}
+                thumbUrl={listing.imageUrl}
+              ></HomeCard>
             ))}
-            <HomeCard className="w-72"></HomeCard>
-            <HomeCard className="w-72"></HomeCard>
-            <HomeCard className="w-72"></HomeCard>
-            <HomeCard className="w-72"></HomeCard>
-            <HomeCard className="w-72"></HomeCard>
-            <HomeCard className="w-72"></HomeCard>
-            <HomeCard className="w-72"></HomeCard>
-            <HomeCard className="w-72"></HomeCard>
           </div>
         </section>
       </HomeLayout>
     </>
-  )
+  );
 }
