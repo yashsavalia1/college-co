@@ -14,7 +14,7 @@ import PocketBase, { Record } from 'pocketbase';
 import { useEffect, useState } from 'react';
 import studentsBg from '../assets/students-background.jpg';
 import styles from '../styles/Home.module.css';
-import Listing from '../types/listing';
+import Listing, { ListingRecord } from '../types/listing';
 import initPocketBase from '../utils/pocketbase-init';
 
 const prompt = Prompt({ weight: '700', subsets: ['latin'] });
@@ -27,14 +27,15 @@ export const getServerSideProps: GetServerSideProps<{
     res as NextApiResponse
   );
 
-  const listings = (await pb.collection('listings').getList<Listing>(1, 50))
-    .items;
+  const listings = (
+    await pb.collection('listings').getList<ListingRecord>(1, 50)
+  ).items;
 
   const listingsWithImages = listings.map((listing) => {
     const firstFilename = listing.images ? listing.images[0] : null;
     let url = '';
     if (firstFilename)
-      url = pb.getFileUrl(listing as unknown as Record, firstFilename, {
+      url = pb.getFileUrl(listing, firstFilename, {
         thumb: '100x250',
       });
     return { ...listing, imageUrl: url };

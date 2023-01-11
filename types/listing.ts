@@ -1,3 +1,5 @@
+import { Record } from 'pocketbase';
+
 type Listing = {
   id: string;
   title: string;
@@ -12,3 +14,4 @@ type Listing = {
 };
 
 export default Listing;
+export type ListingRecord = Listing & Record;
