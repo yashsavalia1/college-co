@@ -23,4 +23,25 @@ async function initPocketBase(req: NextApiRequest, res: NextApiResponse) {
   return pb;
 }
 
-export default initPocketBase;
+async function signIn(email: string, password: string) {
+  const pb = new PocketBase('https://college-co-db.fly.dev/');
+  try {
+    const authData = await pb
+      .collection('users')
+      .authWithPassword(email, password);
+    if (authData) {
+      document.cookie = pb.authStore.exportToCookie(
+        { httpOnly: false },
+        'pb_auth'
+      );
+      return true;
+    }
+  } catch (err: any) {
+    alert(err);
+  }
+  return false;
+}
+
+function signOut() {}
+
+export { initPocketBase, signIn, signOut };

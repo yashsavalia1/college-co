@@ -1,18 +1,20 @@
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import { ReactNode } from 'react';
 import Navbar from './Navbar';
 
 export default function HomeLayout({
   children,
+  ...props
 }: {
-  children: React.ReactNode[];
-}) {
+  children: ReactNode[] | ReactNode;
+} & React.AllHTMLAttributes<HTMLElement>) {
   return (
     <>
       <div className="drawer">
         <input id="main-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
           <Navbar />
-          <main>{children}</main>
+          <main className={props.className}>{children}</main>
         </div>
         <div className="drawer-side">
           <label htmlFor="main-drawer" className="drawer-overlay"></label>
