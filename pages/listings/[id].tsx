@@ -13,14 +13,11 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async (context) => {
   const id = context.params?.id;
 
-  const listing = await pb
-    .collection('listings')
-    .getFirstListItem<Listing>(`id='${id}'`);
+  const listing = await pb.collection('listings').getFirstListItem<Listing>(`id='${id}'`);
 
   const imageUrls =
-    listing.images?.map((image: string) =>
-      pb.getFileUrl(listing as unknown as Record, image, { thumb: '100x250' })
-    ) ?? [];
+    listing.images?.map((image: string) => pb.getFileUrl(listing as unknown as Record, image, { thumb: '100x250' })) ??
+    [];
   return {
     props: {
       listing: JSON.parse(JSON.stringify(listing)),
@@ -29,22 +26,13 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
-export default function ListingPage({
-  listing,
-  imageUrls,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function ListingPage({ listing, imageUrls }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <div>
-      <h1>{listing.title}</h1>
-      <div>
+    <div className="flex flex-col items-center">
+      <h1 className="text-3xl font-bold text-center">{listing.title}</h1>
+      <div className="flex flex-wrap justify-center">
         {imageUrls.map((url, i) => (
-          <Image
-            key={i}
-            src={url}
-            fill
-            style={{ objectFit: 'contain' }}
-            alt={listing.images![i]}
-          />
+          <Image key={i} src={url} fill style={{ objectFit: 'contain' }} alt={listing.images![i]} />
         ))}
       </div>
     </div>

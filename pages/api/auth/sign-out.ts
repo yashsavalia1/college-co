@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { initPocketBase, signOut } from '../../../utils/pocketbase-init';
+import { initPocketBase } from '../../../utils/pocketbase-auth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const pb = await initPocketBase(req, res);

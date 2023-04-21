@@ -1,7 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import PocketBase from 'pocketbase';
+import PocketBase, { BaseAuthStore } from 'pocketbase';
+import { createContext, ReactNode, useContext } from 'react';
 
-async function initPocketBase(req: NextApiRequest, res: NextApiResponse) {
+const AuthContext = createContext<BaseAuthStore | undefined>(undefined);
+
+export const AuthProvider = ({ children, authStore }: { children: ReactNode; authStore: BaseAuthStore }) => {
+  return <AuthContext.Provider value={authStore}>{children}</AuthContext.Provider>;
+};
+
+export const usePocketBase = () => {
+  return new PocketBase('https://college-co-db.fly.dev/', useContext(AuthContext));
+};
+
+export const initPocketBase = async (req: NextApiRequest, res?: NextApiResponse) => {
   const pb = new PocketBase('https://college-co-db.fly.dev/');
 
   // load the store data from the request cookie string
@@ -21,27 +32,8 @@ async function initPocketBase(req: NextApiRequest, res: NextApiResponse) {
   }
 
   return pb;
-}
+};
 
-async function signIn(email: string, password: string) {
-  const pb = new PocketBase('https://college-co-db.fly.dev/');
-  try {
-    const authData = await pb
-      .collection('users')
-      .authWithPassword(email, password);
-    if (authData) {
-      document.cookie = pb.authStore.exportToCookie(
-        { httpOnly: false },
-        'pb_auth'
-      );
-      return true;
-    }
-  } catch (err: any) {
-    alert(err);
-  }
-  return false;
-}
-
-function signOut() {}
-
-export { initPocketBase, signIn, signOut };
+export type AuthProps = {
+  authStore?: BaseAuthStore;
+};

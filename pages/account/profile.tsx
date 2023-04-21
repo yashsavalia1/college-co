@@ -3,7 +3,7 @@ import { CheckBadgeIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid
 import { GetServerSideProps, InferGetServerSidePropsType, NextApiRequest, NextApiResponse } from 'next';
 import Image from 'next/image';
 import PocketBase, { BaseAuthStore, Record } from 'pocketbase';
-import { initPocketBase } from '../../utils/pocketbase-init';
+import { initPocketBase, usePocketBase } from '../../utils/pocketbase-auth';
 import serializeAuthStore from '../../utils/serialize-authstore';
 import useAuthStore from '../../utils/use-authstore';
 
@@ -19,10 +19,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 };
 
 export default function Profile(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const authStore = useAuthStore();
-  const pb = new PocketBase('https://college-co-db.fly.dev/');
-  pb.authStore.save(authStore?.token ?? '', props.authStore.model);
-
+  const pb = usePocketBase();
   const model = pb.authStore.model;
 
   return (

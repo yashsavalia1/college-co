@@ -5,15 +5,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import PocketBase, { Record } from 'pocketbase';
-import useAuthStore from '../utils/use-authstore';
+import { FaCouch, FaTshirt } from 'react-icons/fa';
+import { usePocketBase } from '../utils/pocketbase-auth';
 import NavbarSearchBar from './NavbarSearchBar';
 
 const prompt = Prompt({ weight: '700', subsets: ['latin'] });
 
 export default function Navbar() {
   const router = useRouter();
-  const authStore = useAuthStore();
-  const pb = new PocketBase('https://college-co-db.fly.dev/');
+  const pb = usePocketBase();
 
   return (
     <nav className="navbar bg-gray-300">
@@ -33,10 +33,15 @@ export default function Navbar() {
 
         <div className="md:block hidden">
           <Link href="/" className="btn btn-ghost normal-case">
-            Navbar Item 1
+            <FaTshirt className="w-5 mr-1" />
+            Clothing
           </Link>
           <Link href="/" className="btn btn-ghost normal-case">
-            Navbar Item 2
+            <FaCouch className="w-5 mr-1" />
+            Furniture
+          </Link>
+          <Link href="/" className="btn btn-ghost normal-case">
+            All Listings
           </Link>
         </div>
       </div>
@@ -45,13 +50,13 @@ export default function Navbar() {
         <div className="form-control md:flex hidden">
           <NavbarSearchBar />
         </div>
-        {authStore?.token ? (
+        {pb.authStore?.token ? (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                {authStore.model?.avatar ? (
+                {pb.authStore.model?.avatar ? (
                   <Image
-                    src={pb.getFileUrl(authStore.model as Record, authStore.model?.avatar)}
+                    src={pb.getFileUrl(pb.authStore.model as Record, pb.authStore.model?.avatar)}
                     width={80}
                     height={80}
                     alt="avatar"

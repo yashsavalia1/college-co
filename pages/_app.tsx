@@ -1,10 +1,9 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { BaseAuthStore, LocalAuthStore } from 'pocketbase';
+import PocketBase, { BaseAuthStore, LocalAuthStore } from 'pocketbase';
 import { createContext } from 'react';
 import '../styles/globals.css';
-
-export const AuthContext = createContext(null as BaseAuthStore | null);
+import { AuthProvider } from '../utils/pocketbase-auth';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -14,9 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AuthContext.Provider value={pageProps.authStore ?? null}>
+      <AuthProvider authStore={pageProps.authStore}>
         <Component {...pageProps} />
-      </AuthContext.Provider>
+      </AuthProvider>
     </>
   );
 }

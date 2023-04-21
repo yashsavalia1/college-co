@@ -2,7 +2,6 @@ import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next';
 import { useRouter } from 'next/router';
 import PocketBase from 'pocketbase';
 import { Dispatch, FormEvent, HTMLInputTypeAttribute, SetStateAction, useState } from 'react';
-import { initPocketBase, signIn } from '../utils/pocketbase-init';
 
 function FormElement({
   name,

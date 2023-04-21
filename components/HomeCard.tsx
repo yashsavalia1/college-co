@@ -8,11 +8,8 @@ const HomeCard: React.FC<{
   thumbUrl: string;
 }> = ({ className = 'w-96', listing, thumbUrl }) => {
   return (
-    <Link
-      href={`/listings/${listing?.id}`}
-      className="hover:scale-[102%] transition-transform"
-    >
-      <div className={`card ${className} bg-base-100 shadow-xl`}>
+    <Link href={`/listings/${listing?.id}`} className={`hover:scale-[102%] transition-transform ${className}`}>
+      <div className="card bg-base-100 shadow-xl">
         {thumbUrl && (
           <figure className="h-44 relative border-2">
             <Image
