@@ -7,7 +7,6 @@ import { GetServerSideProps, InferGetServerSidePropsType, NextApiRequest, NextAp
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import PocketBase, { BaseAuthStore, LocalAuthStore, Record } from 'pocketbase';
 import { useContext, useEffect, useState } from 'react';
 import studentsBg from '../../assets/students-background.jpg';
 import styles from '../../styles/Home.module.css';
@@ -21,7 +20,7 @@ type Props = {
   listings: (Listing & { imageUrl: string })[];
 };
 
-export const getServerSideProps: GetServerSideProps<Props & AuthProps> = async ({ req, res, ...context }) => {
+export const getServerSideProps: GetServerSideProps<AuthProps<Props>> = async ({ req, res, ...context }) => {
   const pb = await initPocketBase(req as NextApiRequest, res as NextApiResponse);
 
   const { query } = context.query;

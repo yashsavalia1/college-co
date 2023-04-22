@@ -5,10 +5,9 @@ import Image from 'next/image';
 import PocketBase, { BaseAuthStore, Record } from 'pocketbase';
 import { initPocketBase, usePocketBase } from '../../utils/pocketbase-auth';
 import serializeAuthStore from '../../utils/serialize-authstore';
-import useAuthStore from '../../utils/use-authstore';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const pb = await initPocketBase(req as NextApiRequest, res as NextApiResponse);
+  const pb = await initPocketBase(req, res);
 
   return {
     props: {

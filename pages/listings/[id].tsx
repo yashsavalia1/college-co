@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 import PocketBase, { Record } from 'pocketbase';
 import { useEffect, useState } from 'react';
 import Listing from '../../types/listing';
-
-const pb = new PocketBase('https://college-co-db.fly.dev/');
+import { initPocketBase } from '../../utils/pocketbase-auth';
 
 export const getServerSideProps: GetServerSideProps<{
   listing: Listing;
   imageUrls: string[];
 }> = async (context) => {
+  const pb = await initPocketBase(context.req, context.res);
   const id = context.params?.id;
 
   const listing = await pb.collection('listings').getFirstListItem<Listing>(`id='${id}'`);

@@ -23,7 +23,7 @@ type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }) => {
-  const pb = await initPocketBase(req as NextApiRequest, res as NextApiResponse);
+  const pb = await initPocketBase(req, res);
 
   const listings = (
     await pb.collection('listings').getList<ListingRecord>(1, 50, {
