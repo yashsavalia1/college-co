@@ -14,7 +14,7 @@ import Listing, { ListingRecord } from '../types/listing';
 import { initPocketBase } from '../utils/pocketbase-auth';
 import serializeAuthStore from '../utils/serialize-authstore';
 
-const prompt = Prompt({ weight: '700', subsets: ['latin'] });
+const prompt = Prompt({ weight: '700', subsets: ['latin'], display: 'swap' });
 
 type Props = {
   listings: (Listing & { imageUrl: string })[];

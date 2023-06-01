@@ -9,7 +9,7 @@ import { FaCouch, FaTshirt } from 'react-icons/fa';
 import { usePocketBase } from '../utils/pocketbase-auth';
 import NavbarSearchBar from './NavbarSearchBar';
 
-const prompt = Prompt({ weight: '700', subsets: ['latin'] });
+const prompt = Prompt({ weight: '700', subsets: ['latin'], display: 'swap' });
 
 export default function Navbar() {
   const router = useRouter();
