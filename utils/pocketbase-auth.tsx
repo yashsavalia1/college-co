@@ -32,11 +32,11 @@ export type AuthResponse = ServerResponse;
 /**
  * Initialize a PocketBase instance with an auth store
  */
-export const initPocketBase = async (req: AuthRequest, res: AuthResponse) => {
+export const initPocketBase = async (req: AuthRequest, res?: AuthResponse) => {
   const pb = new PocketBase('https://college-co-db.fly.dev/');
 
   // load the store data from the request cookie string
-  pb.authStore.loadFromCookie(req?.headers?.cookie || '');
+  pb.authStore.loadFromCookie(req.headers.cookie || '');
 
   // send back the default 'pb_auth' cookie to the client with the latest store state
   pb.authStore.onChange(() => {
