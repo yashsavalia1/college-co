@@ -14,4 +14,5 @@ type Listing = {
 };
 
 export default Listing;
+export type NewListing = Omit<Listing, 'id'>;
 export type ListingRecord = Listing & Record;
