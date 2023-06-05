@@ -32,8 +32,6 @@ export default function CreateListing() {
       return;
     }
 
-    console.log(title, description, price, model?.id.toString());
-
     try {
       const response = await fetch('/api/collections/listings/records', {
         method: 'POST',
@@ -53,33 +51,76 @@ export default function CreateListing() {
       setError("There was an error creating your listing. Please try again.");
     }
   };
-
   return (
-    <div>
+    <div className="h-screen grid place-items-center">
       {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        placeholder="Title"
-      />
-      <input
-        type="text"
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-        placeholder="Description"
-      />
-      <input
-        type="number"
-        value={price}
-        onChange={e => setPrice(parseFloat(e.target.value))}
-        placeholder="Price"
-      />
-      {/* Other input fields for other fields */}
-      <button type="submit">Create Listing</button>
-    </form>
+      <form action="/api/collections/listings/records" method="POST" onSubmit={handleSubmit}>
+        <h1 className="text-3xl self-center pb-2 text-center">Create Listing</h1>
+        <div className="grid gap-2 pb-2">
+          <StringFormElement name="title" type="text" value={title} setValue={setTitle} />
+          <StringFormElement name="description" type="text" value={description} setValue={setDescription} />
+          <NumberFormElement name="price" type="number" value={price} setValue={setPrice} />
+        </div>
+        <button className="btn" type="submit">Create Listing</button>
+      </form>
     </div>
-
   );
 }
+
+function StringFormElement({
+  name,
+  type,
+  value,
+  setValue,
+}: {
+  name: string;
+  type: HTMLInputTypeAttribute;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+}) {
+  return (
+    <div className="flex flex-col">
+      <label htmlFor={name.toLowerCase()} className="capitalize">
+        {name.split('-').join(' ')}
+      </label>
+      <input
+        id={name.toLowerCase()}
+        type={type}
+        className="input input-bordered"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function NumberFormElement({
+  name,
+  type,
+  value,
+  setValue,
+}: {
+  name: string;
+  type: HTMLInputTypeAttribute;
+  value: number;
+  setValue: Dispatch<SetStateAction<number>>;
+}) {
+  return (
+    <div className="flex flex-col">
+      <label htmlFor={name.toLowerCase()} className="capitalize">
+        {name.split('-').join(' ')}
+      </label>
+      <input
+        id={name.toLowerCase()}
+        type={type}
+        className="input input-bordered"
+        value={value.toString()}
+        onChange={(e) => setValue(parseFloat(e.target.value))}
+      />
+    </div>
+  );
+}
+
+
+
+
