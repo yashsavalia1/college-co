@@ -32,15 +32,15 @@ export default function Navbar() {
         </Link>
 
         <div className="md:block hidden">
-          <Link href="/" className="btn btn-ghost normal-case">
+          <Link href="/clothing" className="btn btn-ghost normal-case">
             <FaTshirt className="w-5 mr-1" />
             Clothing
           </Link>
-          <Link href="/" className="btn btn-ghost normal-case">
+          <Link href="/furniture" className="btn btn-ghost normal-case">
             <FaCouch className="w-5 mr-1" />
             Furniture
           </Link>
-          <Link href="/" className="btn btn-ghost normal-case">
+          <Link href="/listings" className="btn btn-ghost normal-case">
             All Listings
           </Link>
         </div>

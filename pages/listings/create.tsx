@@ -4,7 +4,9 @@ import { initPocketBase, usePocketBase } from '../../utils/pocketbase-auth';
 import serializeAuthStore from '../../utils/serialize-authstore';
 import PocketBase, { BaseAuthStore, Record } from 'pocketbase';
 import { GetServerSideProps, InferGetServerSidePropsType, NextApiRequest, NextApiResponse } from 'next';
+import { NewListing } from '../../types/listing';
 
+// do we need this anymore?
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const pb = await initPocketBase(req, res);
 
@@ -22,7 +24,6 @@ export default function CreateListing() {
   const [error, setError] = useState("");
   const router = useRouter();
   const pb = usePocketBase();
-  const model = pb.authStore.model;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,28 +34,28 @@ export default function CreateListing() {
     }
 
     try {
-      const response = await fetch('/api/collections/listings/records', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description, price, userId: model?.id.toString() }),
-      });      
+      const listingData: NewListing = {
+        title: title,
+        description: description,
+        price: price,
+        user: pb.authStore.model?.id.toString(),
+        published: false,
+        created: new Date().toISOString(),
+      };
+      const listing = await pb.collection('listings').create(listingData);
 
-      if (response.ok) {
-        // Redirect to the home page after the listing is created
-        router.push('/');
-      } else {
-        const data = await response.json();
-        console.error(data);
-      }
-    } catch (error: any) {
-      console.error(error);
+    } catch (err: any) {
+      console.log(err);
       setError("There was an error creating your listing. Please try again.");
     }
+
+    router.push('/');
+
   };
   return (
     <div className="h-screen grid place-items-center">
       {error && <p>{error}</p>}
-      <form action="/api/collections/listings/records" method="POST" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h1 className="text-3xl self-center pb-2 text-center">Create Listing</h1>
         <div className="grid gap-2 pb-2">
           <StringFormElement name="title" type="text" value={title} setValue={setTitle} />
