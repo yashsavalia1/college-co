@@ -50,6 +50,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
 };
 
 export default function Home({ listings }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push('/listings/create');
+  };
+
   return (
     <>
       <Head>
@@ -77,6 +84,11 @@ export default function Home({ listings }: InferGetServerSidePropsType<typeof ge
 
         <section className="p-3">
           <h1 className="text-3xl mb-8">Latest Listings</h1>
+          {/* create a heading that directs a user to create a post*/}
+          <div className="flex">
+            <button onClick={handleClick} className="btn btn-primary">Create a Post</button>
+          </div>
+
           <div className="flex flex-wrap gap-8 md:justify-start justify-center">
             {listings.map((listing) => (
               <HomeCard

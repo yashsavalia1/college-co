@@ -7,11 +7,12 @@ type Listing = {
   images?: string[];
   price: number;
   tags?: string[];
-  user?: {};
+  user?: string;
   published: boolean;
   created: Date | string;
   updated?: Date | string;
 };
 
 export default Listing;
+export type NewListing = Omit<Listing, 'id'>;
 export type ListingRecord = Listing & Record;
